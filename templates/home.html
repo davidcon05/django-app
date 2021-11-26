@@ -1,0 +1,165 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <!--Auth: David Contreras-->
+    <!--Settings: View, CSS, JS, Language-->
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" conent="IE=edge">
+        <meta name="viewport" content="width=device=width, initial-scale=1.0">
+        <title>Group 11: Rowdy Password Manager</title>
+        <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+        <link rel='stylesheet' href="{% static 'style.css'%}">
+        <script src="{% static 'main.js' %}" defer></script>
+    </head>
+    
+    <body>
+        <!--Header and Navigation-->
+        <header>
+            <nav>
+                <div class="brand"><a href=""><i class="fa fa-lock" aria-hidden="true"></i>&nbsp; Rowdy Password Manager</a></div>
+                <div class="rowdy"><img src="https://www.utsa.edu/_files/home/images/ctas/featured/rowdy-white.png" alt="UTSA Class Project" style="display: block; margin-left: auto; margin-right: auto;"></div>
+                <ul>
+                    <li><a href="">Stored Passwords</a></li>
+                    {% if request.user.is_anonymous %}
+                        <li><a href="javascript:;" onclick="displayModal('login-modal');">Login</a></li>
+                        <li><a href="javascript:;" onclick="displayModal('signup-modal');">Sign Up</a></li>
+                    {% else %}
+                        <li><a href="javascript:;" onclick="displayModal('create-password-modal');">Create Password</a></li>
+                        <li><a href="javascript:;" onclick="document.getElementById('logout-btn').click();">Logout</a></li>
+                            <form hidden="true" action="." method="POST">
+                                <!-- Cross Site Request Forgery Protection-->
+                                {% csrf_token %}
+                                <input type="submit" id="logout-btn" name="logout">
+                            </form>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+
+        <!--Display Django Messages-->
+        {% if messages %}
+            <div class="messages" style="text-align: center">
+                {% for message in messages %}
+                    <p>
+                        {% if message.tags == "error" %}
+                            <i class ="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                            {% else %}
+                            <i class ="fa fa-check" aria-hidden="true"></i>
+                        {% endif %}
+                        &nbsp;{{message}}
+                    </p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <!--Confirmation Email-->
+        {% if code %}
+            <div style="text-align: center;">
+                <form action="." role="form" method="POST">
+                    {% csrf_token %}
+                    <H2>Confirmation Code</h2>
+                    <p>For security reasons please check your email for a confirmation code from group11.appmananger@gmail.com.</p>
+                    <input type="text" name="code" placeholder="6 digit confirmation code">
+                    <input type="text" hidden="true" name="user" value="{{user.username}}">
+                    <input type="submit" value="Confirm" name="confirm" class="button">
+                </form>
+            </div>
+        {% endif %}
+
+        <!--Django Modals-->
+        <div class="modals-wrapper">
+            <span id="close-modal" title="close"><i class="fa fa-times" aria-hidden="true"></i></span>
+            
+            <!--login modal-->
+            <div class="modal" id="login-modal">
+                <form action="." role="form" method="POST">
+                    {% csrf_token %}
+                    <h2>Login</h2>
+                    <input type="text" name="username" placeholder="username">
+                    <input type="password" name="password" placeholder="password"><br>
+                    <input type="submit" name="login" value="Login" class="button" style="width: auto;">
+                </form>
+            </div>
+
+            <!--sign up modal-->
+            <div class="modal" id="signup-modal">
+                <form action="." role="form" method="POST">
+                    {% csrf_token %}
+                    <h2>Sign Up</h2>
+                    <input type="text" name="username" placeholder="username">
+                    <input type="email" name="email" placeholder="email">
+                    <input type="password" name="password" placeholder="password">
+                    <input type="password" name="confirmPassword" placeholder="confirm password"><br>
+                    <input type="submit" name="register" value="Register" class ="button" style="width:auto;">
+                </form>
+            </div>
+
+            <!--add password modal-->
+            <div class="modal" id="create-password-modal">
+                <form action="." role="form" method="POST">
+                    {% csrf_token %}
+                    <h2>Add New Password</h2>
+                    <br>
+                    <p style="color:white;">Link to login page of this password:</p>
+                    <input type="text" name="url" placeholder="url of website">
+                    <p style="color:white;">Enter email address used on this site:</p>
+                    <input type="email" name="email" placeholder="email">
+                    <p style="color:white;">Enter a date/phrase: 12/25/2021</p>
+                    <input type="password" name="passphrase" placeholder="passphrase">
+                    <p style="color:white;">Include the following in my password:</p>
+                    <div>
+                        <input type="checkbox" id="capitalsBoolean" name="capitalsBoolean" value="True" style="width: auto; align-content: start; " checked>  
+                        <label for="capitals" style="color: white; margin-left: 1px">Capitals</label><br>
+                        <input type="checkbox" id="numbersBoolean" name="numbersBoolean" value="True" style="width: auto; align-content: start;  " checked>
+                        <label for="numbersBoolean" style="align-content: start; color: white; margin-left: 1px">Numbers</label><br>
+                        <input type="checkbox" id="symbolsBoolean" name="symbolsBoolean" value="True" style="width: auto; align-content: start;  " checked>
+                        <label for="symbolsBoolean" style="align-content: start; color: white; margin-left: 1px">Symbols</label><br>
+                        <input type="submit" value="Save" name="add-password" class="button" style="width:auto;">
+                    </div>
+                </form>
+            </div>
+
+        </div> <!--End of Modals-->
+
+        <div class="container">
+            <!--Account Card Template-->
+            {% for password in passwords %}
+            <div class="card">
+                <!--Delete Option for Password-->
+                <div class="actions">&nbsp;Actions <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                    <a href="javascript:;" onclick="document.getElementById('delete-btn{{password.id}}').click();" class="action-item">Delete</a>
+                        <form hidden="true" action="." method="POST">
+                            <!-- Cross Site Request Forgery Protection-->
+                            {% csrf_token %}
+                            <input type="text" hidden="true" name="password_id" value="{{password.id}}">
+                            <input type="submit" id="delete-btn{{password.id}}" name="delete">
+                        </form>
+                </div>
+                <img width="50" height="50" src="{{password.URL_logo}}" alt="">
+                <!--Show URL password is for-->
+                <div class="name" style="text-align:center;">{{password.name}}</div>
+                <!--Show email and clipboard icon-->
+                <div>
+                    <br><br>
+                    <p>Email:</p>
+                    <input type="email" name="email" value="{{password.email}}" style="width:112px;">
+                    <i class="fas fa-copy copy" title="copy to clipboard"></i>
+                </div>
+                <!--Show password and clipboard icon-->
+                <div>
+                    <p>Password:</p>
+                    <input type="password" name="username" value="{{password.password}}" style="width:112px;">
+                    <i class="fas fa-copy copy" title="copy to clipboard"></i>
+                </div>
+            </div> <!--End of Account Card Template-->
+            {% endfor %}
+        </div> <!-- end of container -->
+        
+        <footer>
+            <a href="">Group 11 Final Project:<br>
+            <i class="fa fa-lock" aria-hidden="true"></i>&nbsp;Rowdy Password Manager</a>
+        </footer>
+    </body>
+</html>
