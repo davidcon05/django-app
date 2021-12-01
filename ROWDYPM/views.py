@@ -29,6 +29,15 @@ def testfun(email, capitalsBoolean, numbersBoolean, symbolsBoolean, passphrase):
     print("testfun: 12/25/2021 -> ", password)
     return testfunOut
 
+def listToString(stringToConvert): 
+    # initialize an empty string
+    returnString = "" 
+    # traverse in the string  
+    for ele in stringToConvert: 
+        returnString += ele  
+    # return string  
+    return returnString 
+
 def create_password(capitalsBoolean, numbersBoolean, symbolsBoolean, passphrase):
     # Checkbox on app will indicate whether the password needs uppercase or not
     upperCase = capitalsBoolean
@@ -77,6 +86,21 @@ def create_password(capitalsBoolean, numbersBoolean, symbolsBoolean, passphrase)
         "8": ":",
         "0": "^"
         }
+    expansionList = ['g', 'h', 'i', 'j', 'k', 'n', 'p', 'q', 'r', 's',
+                    't', 'u', 'v', 'w', 'x', 'y', 'z']
+    # Expand hexadecimal output of MD5SUM to improve complexity 
+    # 17 x 2 = 34 expansion letters -> 34 + 12 via hex letters + 10nums + 20 symbols = 76**32 combinations
+    encodeString = list(encodeString)
+    expansionElem = 0
+    for encodeElem in range(len(encodeString)):
+        expansion = False
+        if encodeElem % 2 == 0: 
+            while expansion == False:
+                encodeString[encodeElem] = expansionList[expansionElem]
+                expansionElem += 1
+                expansion = True
+    
+    encodeString = listToString(encodeString) 
     #Appply a series of shifts and substitutions to randomize string
     #1. If uppercase is True search string and change every third isalpha char to Uppercase >> DONE (GJ)
     for i in range (strlen):
@@ -142,9 +166,8 @@ def create_password(capitalsBoolean, numbersBoolean, symbolsBoolean, passphrase)
             updatedNewstr[i],updatedNewstr[i+1] = updatedNewstr[i+1],updatedNewstr[i]
         else:
             continue
-    for i in updatedNewstr:
-        finalStr = finalStr + i
     
+    finalStr = listToString(updatedNewstr)
     # Split the string into thirds and jumble the segments
     thirds = (len(finalStr) // 3)
     firstThird = finalStr[:thirds]
