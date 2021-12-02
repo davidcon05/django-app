@@ -61,9 +61,9 @@
                     {% csrf_token %}
                     <H2>Confirmation Code</h2>
                     <p>For security reasons please check your email for a confirmation code from group11.appmananger@gmail.com.</p>
-                    <input type="text" name="code" placeholder="6 digit confirmation code">
+                    <input type="text" name="code" placeholder="6 digit confirmation code" style="width: auto;">
                     <input type="text" hidden="true" name="user" value="{{user.username}}">
-                    <input type="submit" value="Confirm" name="confirm" class="button">
+                    <input type="submit" class="button"  name="confirm" value="Confirm" style="width: auto;">
                 </form>
             </div>
         {% endif %}
@@ -79,7 +79,7 @@
                     <h2>Login</h2>
                     <input type="text" name="username" placeholder="username">
                     <input type="password" name="password" placeholder="password"><br>
-                    <input type="submit" name="login" value="Login" class="button" style="width: auto;">
+                    <input type="submit" class="button" name="login" value="Login"  style="width: auto;">
                 </form>
             </div>
 
@@ -92,7 +92,7 @@
                     <input type="email" name="email" placeholder="email">
                     <input type="password" name="password" placeholder="password">
                     <input type="password" name="confirmPassword" placeholder="confirm password"><br>
-                    <input type="submit" name="register" value="Register" class ="button" style="width:auto;">
+                    <input type="submit" class ="button" name="register" value="Register"  style="width:auto;">
                 </form>
             </div>
 
@@ -100,7 +100,7 @@
             <div class="modal" id="create-password-modal">
                 <form action="." role="form" method="POST">
                     {% csrf_token %}
-                    <h2>Add New Password</h2>
+                    <h2>Generate New Password</h2>
                     <br>
                     <p style="color:white;">Link to login page of this password:</p>
                     <input type="text" name="url" placeholder="link to website">
@@ -117,7 +117,7 @@
                         <label for="s_box1" style="width: auto; align-content: start; "><input type="radio" name="symbolsBoolean" value="True" id="s_box1"style="width: auto; align-content: start; ">Use Symbols</label>
                         <label for="s_box2" style="width: auto; align-content: start; "><input type="radio" name="symbolsBoolean" value="False" id="s_box2" style="width: auto; align-content: start; ">No Symbols</label><br>
 
-                        <input type="submit" value="Save" name="add-password" class="button" style="width:auto;">
+                        <input type="submit" class="button" name="add-password" value="Create Password"  style="width:auto;">
                     </div>
                 </form>
             </div>

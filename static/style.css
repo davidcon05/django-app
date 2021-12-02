@@ -213,12 +213,6 @@ header nav ul li{
     }
 }
 
-.actions{
-    cursor: pointer;
-    border: solid 0.3px var(--link-background-color);
-    padding: 5px;
-}
-
 /*Change the size of the modal in the small devices*/
 @media screen and (max-width: 680px) {
     .modal{
