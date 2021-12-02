@@ -230,7 +230,7 @@ def home(request):
                 globalCode = code
                 send_mail(
                     "Rowdy Password Manager: Confirmation email",
-                    f"Your verifcation code is: {code}",
+                    f"Your confirmation code is: {code}",
                     settings.EMAIL_HOST_USER,
                     [loginAttempt.email],
                     fail_silently=False,
@@ -242,15 +242,15 @@ def home(request):
                 )
         # Login Confirmation
         elif "confirm" in request.POST:
-            verificationCode = request.POST.get("code")
+            confirmationCode = request.POST.get("code")
             user = request.POST.get("user")
-            if verificationCode != globalCode:
-                msg = f"Verfication code input {verificationCode}, does not match"
+            if confirmationCode != globalCode:
+                msg = f"Confirmation code input {confirmationCode}, does not match"
                 messages.error(request, msg)
                 return HttpResponseRedirect(request.path)
             else:
                 login(request, User.objects.get(username=user))
-                msg = f"Verification Successful. Welcome back {request.user}!"
+                msg = f"Confirmation Successful. Welcome back {request.user}!"
                 messages.success(request, msg)
                 return HttpResponseRedirect(request.path)
         # Store new password
