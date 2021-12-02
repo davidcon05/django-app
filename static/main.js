@@ -1,4 +1,4 @@
-//display  modal on click
+// Display content via modals, on click
 const modalWrapper = document.querySelector(".modals-wrapper");
 if (modalWrapper){
     function displayModal(id){
@@ -17,7 +17,7 @@ if (modalWrapper){
     }
 }
 
-//copy to clipboard
+// Clipboard copy with popup
 const copies = document.querySelectorAll(".copy");
 copies.forEach(copy =>{
     copy.onclick = () =>{
@@ -28,21 +28,3 @@ copies.forEach(copy =>{
         alert("Copied: " + elemntToCopy.value)
     }
 })
-
-//Display the actions of the password card for mobile devices
-const actions = document.querySelectorAll(".actions");
-if (actions){
-    actions.forEach(action =>{
-        action.onclick = () =>{
-            const links = action.querySelectorAll("a");
-            links.forEach(link =>{
-                link.style.display = "flex";
-            })
-            setTimeout(function(){
-                links.forEach(link =>{
-                    link.style.display = "none";
-                })}
-            , 3000)
-        }
-    })
-}

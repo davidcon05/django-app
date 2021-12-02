@@ -21,12 +21,12 @@
                 <div class="brand"><a href=""><i class="fa fa-lock" aria-hidden="true"></i>&nbsp; Rowdy Password Manager</a></div>
                 <div class="rowdy"><img src="https://www.utsa.edu/_files/home/images/ctas/featured/rowdy-white.png" alt="UTSA Class Project" style="display: block; margin-left: auto; margin-right: auto;"></div>
                 <ul>
-                    <li><a href="">Stored Passwords</a></li>
+                    <li><a href="">Passwords</a></li>
                     {% if request.user.is_anonymous %}
                         <li><a href="javascript:;" onclick="displayModal('login-modal');">Login</a></li>
-                        <li><a href="javascript:;" onclick="displayModal('signup-modal');">Sign Up</a></li>
+                        <li><a href="javascript:;" onclick="displayModal('registration-modal');">Register</a></li>
                     {% else %}
-                        <li><a href="javascript:;" onclick="displayModal('create-password-modal');">Create Password</a></li>
+                        <li><a href="javascript:;" onclick="displayModal('create-password-modal');">Create</a></li>
                         <li><a href="javascript:;" onclick="document.getElementById('logout-btn').click();">Logout</a></li>
                             <form hidden="true" action="." method="POST">
                                 <!-- Cross Site Request Forgery Protection-->
@@ -83,11 +83,11 @@
                 </form>
             </div>
 
-            <!--sign up modal-->
-            <div class="modal" id="signup-modal">
+            <!--registration modal-->
+            <div class="modal" id="registration-modal">
                 <form action="." role="form" method="POST">
                     {% csrf_token %}
-                    <h2>Sign Up</h2>
+                    <h2>Register</h2>
                     <input type="text" name="username" placeholder="username">
                     <input type="email" name="email" placeholder="email">
                     <input type="password" name="password" placeholder="password">
@@ -103,10 +103,10 @@
                     <h2>Add New Password</h2>
                     <br>
                     <p style="color:white;">Link to login page of this password:</p>
-                    <input type="text" name="url" placeholder="url of website">
+                    <input type="text" name="url" placeholder="link to website">
                     <p style="color:white;">Enter email address used on this site:</p>
                     <input type="email" name="email" placeholder="email">
-                    <p style="color:white;">Enter a date/phrase: 12/25/2021</p>
+                    <p style="color:white;">Enter a date/phrase: </p>
                     <input type="password" name="passphrase" placeholder="passphrase">
                     <p style="color:white;">Include the following in my password:</p>
                     <div>
@@ -128,16 +128,13 @@
             {% for password in passwords %}
             <div class="card">
                 <!--Delete Option for Password-->
-                <div class="actions">&nbsp;Actions <i class="fa fa-arrow-down" aria-hidden="true"></i>
-                    <a href="javascript:;" onclick="document.getElementById('delete-btn{{password.id}}').click();" class="action-item">Delete</a>
-                        <form hidden="true" action="." method="POST">
-                            <!-- Cross Site Request Forgery Protection-->
-                            {% csrf_token %}
-                            <input type="text" hidden="true" name="password_id" value="{{password.id}}">
-                            <input type="submit" id="delete-btn{{password.id}}" name="delete">
-                        </form>
-                </div>
-                <img width="50" height="50" src="{{password.URL_logo}}" alt="">
+                <h2><a href="javascript:;" style="color: black;" onMouseOver="this.style.color='#0c2340'" onMouseOut="this.style.color='#000'" onclick="document.getElementById('delete-btn{{password.id}}').click();">Delete</a></h2>
+                    <form hidden="true" action="." method="POST">
+                        {% csrf_token %}
+                        <input type="text" hidden="true" name="password_id" value="{{password.id}}">
+                        <input type="submit" id="delete-btn{{password.id}}" name="delete">
+                    </form>
+                <img width="48" height="48" src="{{password.URL_logo}}" alt="">
                 <!--Show URL password is for-->
                 <div class="name" style="text-align:center;">{{password.name}}</div>
                 <!--Show email and clipboard icon-->
@@ -156,10 +153,6 @@
             </div> <!--End of Account Card Template-->
             {% endfor %}
         </div> <!-- end of container -->
-        
-        <footer>
-            <a href="">Group 11 Final Project:<br>
-            <i class="fa fa-lock" aria-hidden="true"></i>&nbsp;Rowdy Password Manager</a>
-        </footer>
+
     </body>
 </html>

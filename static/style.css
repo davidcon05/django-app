@@ -85,11 +85,6 @@ input:focus{
 }
 
 /*##### header #####*/
-
-header{
-    
-}
-
 header nav{
     display: flex;
     flex-direction: row;
@@ -122,20 +117,6 @@ header nav ul li{
     }
 }
 
-
-/*##### footer #####*/
-
-footer{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    padding: 20px;
-    width: 100%;
-    box-shadow: 0 10px 0 15px var(--gray-color);
-    text-align: center;
-}
-
-
 /*##### modals #####*/
 
 .modals-wrapper{
@@ -164,7 +145,7 @@ footer{
     padding: 5px;
 }
 
-#login-modal, #signup-modal{
+#login-modal, #registration-modal{
     display: none;
     justify-content: center;
     align-items: center;
@@ -218,22 +199,6 @@ footer{
     font-weight: bold;
     padding: 20px;
     border-radius: 20px;
-}
-
-.actions{
-    margin: 5px;
-}
-
-.actions a{
-    display: none;
-    background-color: var(--link-background-color);
-    flex-direction: column;
-    padding: 5px;
-    align-items: center;
-}
-
-.actions:hover .action-item{
-    display: flex;
 }
 
 @media screen and (max-width: 680px) {
