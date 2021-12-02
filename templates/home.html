@@ -110,12 +110,13 @@
                     <input type="password" name="passphrase" placeholder="passphrase">
                     <p style="color:white;">Include the following in my password:</p>
                     <div>
-                        <input type="checkbox" id="capitalsBoolean" name="capitalsBoolean" value="True" style="width: auto; align-content: start; " checked>  
-                        <label for="capitals" style="color: white; margin-left: 1px">Capitals</label><br>
-                        <input type="checkbox" id="numbersBoolean" name="numbersBoolean" value="True" style="width: auto; align-content: start;  " checked>
-                        <label for="numbersBoolean" style="align-content: start; color: white; margin-left: 1px">Numbers</label><br>
-                        <input type="checkbox" id="symbolsBoolean" name="symbolsBoolean" value="True" style="width: auto; align-content: start;  " checked>
-                        <label for="symbolsBoolean" style="align-content: start; color: white; margin-left: 1px">Symbols</label><br>
+                        <label for="n_box1" style="width: auto; align-content: start; "><input type="radio" name="numbersBoolean" value="True" id="n_box1"style="width: auto; align-content: start; ">Use Numbers</label>
+                        <label for="n_box2" style="width: auto; align-content: start; "><input type="radio" name="numbersBoolean" value="False" id="n_box2" style="width: auto; align-content: start; ">No Numbers</label><br>
+                        <label for="c_box1" style="width: auto; align-content: start; "><input type="radio" name="capitalsBoolean" value="True" id="c_box1"style="width: auto; align-content: start; ">Use Capitals</label>
+                        <label for="c_box2" style="width: auto; align-content: start; "><input type="radio" name="capitalsBoolean" value="False" id="c_box2" style="width: auto; align-content: start; ">No Capitals</label><br>
+                        <label for="s_box1" style="width: auto; align-content: start; "><input type="radio" name="symbolsBoolean" value="True" id="s_box1"style="width: auto; align-content: start; ">Use Symbols</label>
+                        <label for="s_box2" style="width: auto; align-content: start; "><input type="radio" name="symbolsBoolean" value="False" id="s_box2" style="width: auto; align-content: start; ">No Symbols</label><br>
+
                         <input type="submit" value="Save" name="add-password" class="button" style="width:auto;">
                     </div>
                 </form>
@@ -128,7 +129,7 @@
             {% for password in passwords %}
             <div class="card">
                 <!--Delete Option for Password-->
-                <h2><a href="javascript:;" style="color: black;" onMouseOver="this.style.color='#0c2340'" onMouseOut="this.style.color='#000'" onclick="document.getElementById('delete-btn{{password.id}}').click();">Delete</a></h2>
+                <h3><a href="javascript:;" style="color: black; :hover: white;" onclick="document.getElementById('delete-btn{{password.id}}').click();">Delete</a></h3>
                     <form hidden="true" action="." method="POST">
                         {% csrf_token %}
                         <input type="text" hidden="true" name="password_id" value="{{password.id}}">

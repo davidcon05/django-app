@@ -256,9 +256,9 @@ def home(request):
         # Store new password
         
         elif "add-password" in request.POST:
-            numbersBoolean = request.POST.get("numbersBoolean")
-            capitalsBoolean = request.POST.get("capitalsBoolean")
-            symbolsBoolean = request.POST.get("symbolsBoolean")
+            numbersBoolean = request.POST.get("numbersBoolean", False) if True else False
+            capitalsBoolean = request.POST.get("capitalsBoolean", False) if True else False
+            symbolsBoolean = request.POST.get("symbolsBoolean", False) if True else False
             url = request.POST.get("url")
             email = request.POST.get("email")
             passphrase = request.POST.get("passphrase")
